@@ -1,13 +1,16 @@
 #include "AZModule.h"
-//#include <stdio.h>
-//#include <modbus.h>
-//#include <unistd.h>
-//#include <errno.h>
-//#include <stdlib.h>
+#include <stdio.h>
+#include <modbus.h>
+#include <unistd.h>
+#include <errno.h>
+#include <stdlib.h>
 
 
-int test(int argc, char *argv[])
+int main(int argc, char *argv[])
 {
+  printf("hello, gushi\r\n");
+  return 1;
+  
   modbus_t *ctx;
   /* Read 5 holding registers from address 1 */
   uint8_t raw_req[] = { 0xFF, MODBUS_FC_READ_HOLDING_REGISTERS, 0x00, 0x01, 0x0, 0x05 };
