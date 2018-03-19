@@ -7,7 +7,6 @@ echo 'hello, bash!'
 
 echo 'build AZModule...'
 # gcc -O3 AZModule.c -shared -I /usr/local/include/modbus -L /usr/local/lib -lmodbus -o AZModule.so
-<<<<<<< HEAD
 gcc -O3 AZModule.c -shared -I /usr/local/include/modbus -L /usr/local/lib -lmodbus -o AZModule
 # ./AZModule
 
@@ -29,4 +28,3 @@ gcc -O3 AZModule.c -I /usr/local/include/modbus -L /usr/local/lib -lmodbus -o AZ
 echo 'running test...'
 gcc -O3 test.c -I /usr/local/include/modbus -L /usr/local/lib -lmodbus -o test
 ./test
->>>>>>> 17cfad5c6502e93b6a8a59ff078e1ac82752e0d8
