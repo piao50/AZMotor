@@ -1,16 +1,10 @@
 #include "AZModule.h"
-#include <stdio.h>
-#include <modbus.h>
-#include <unistd.h>
-#include <errno.h>
-#include <stdlib.h>
-
 
 int main(int argc, char *argv[])
 {
   modbus_t *ctx;
   /* Read 5 holding registers from address 1 */
-  uint8_t raw_req[] = { 0xFF, MODBUS_FC_READ_HOLDING_REGISTERS, 0x00, 0x01, 0x0, 0x05 };
+  uint8_t raw_req[] = { 0xFF, MODBUS_FC_READ_HOLDING_REGISTERS, 0x00, 0x01, 0x0, 0x05};
 
   uint8_t raw_1[] = { 0x01, 0x06, 0x00, 0x7d, 0x00, 0x10 };
 
@@ -18,15 +12,6 @@ int main(int argc, char *argv[])
   uint8_t rsp[MODBUS_TCP_MAX_ADU_LENGTH];
 
   int rc;
-
-  // int delay = 2000;
-  // int loop = 1;
-  // if(argc > 1){ delay = atoi(argv[1]); }
-  // if(argc > 2){ loop = atoi(argv[2]); }
-  // if(delay < 1000) delay = 1000;
-  // if(loop < 1) delay = 1;
-  // printf("args: %d, %d", delay, loop);
-
   ctx = modbus_new_rtu("/dev/ttyUSB0", 115200, 'E', 8, 1);
   if (ctx == NULL) {
     fprintf(stderr, "Unable to allocate libmodbus context\n");
@@ -55,10 +40,12 @@ int main(int argc, char *argv[])
 
   sleep(1);
   
-  int delay = 1000;
+  int delay = 2000;
+  int loop = 10000;
   /* multiply register */
   while(loop-- > 0)
     {
+      modbus_set_slave(ctx, loop % 2 == 0 ? 1 : 2);
       printf("--------------------\r\n");
       //      sleep(5);
       //      uint16_t UT_REGISTERS_TAB[] = { 0x0000, 0x0008 };
@@ -97,7 +84,7 @@ int main(int argc, char *argv[])
       {printf("ERR:%d\r\n",errno);}
 
       printf("waiting %d ms.\r\n", delay);
-      usleep(delay*1000);
+      if(loop % 2 == 0) usleep(delay*1000);
       if(-1 == modbus_write_register(ctx,0x007d,0x0010))
 	{printf("ERR:%d\r\n",errno);}
     }
