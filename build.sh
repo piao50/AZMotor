@@ -24,7 +24,3 @@ gcc -O3 AZModule.c -I /usr/local/include/modbus -L /usr/local/lib -lmodbus -o AZ
 
 #echo 'running AZController.py'
 # ./AZController.py
-
-echo 'running test...'
-gcc -O3 test.c -I /usr/local/include/modbus -L /usr/local/lib -lmodbus -o test
-./test
