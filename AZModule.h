@@ -7,6 +7,6 @@
 #include <errno.h>
 #include <stdlib.h>
 
-int test(int argc, char *argv[]);
+//int test(int argc, char *argv[]);
 
 #endif
