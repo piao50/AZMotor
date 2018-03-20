@@ -40,7 +40,7 @@ int main(int argc, char *argv[])
 
   sleep(1);
 
-  print("bye gushi!\r\n");
+  printf("bye gushi!\r\n");
   
  //  int delay = 2000;
  //  int loop = 10000;
