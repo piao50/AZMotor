@@ -40,6 +40,11 @@ int main(int argc, char *argv[])
 
   sleep(1);
 
+  uint16_t tab_reg[32];
+  /* Read 5 registers from the address 0 */
+  modbus_read_registers(ctx, 0, 5, tag_reg);
+
+
   printf("bye gushi!\r\n");
   
  //  int delay = 2000;
