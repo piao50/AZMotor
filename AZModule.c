@@ -42,11 +42,21 @@ int main(int argc, char *argv[])
 
   uint16_t tab_reg[32];
   /* Read 5 registers from the address 0 */
-  modbus_read_registers(ctx, 0, 5, tab_reg);
-  for(int i = 0; i < 32; i++)
-    printf("%X ", tag_reg[i]);
+  while(1)
+    {
+      modbus_set_slave(ctx,1);
+  modbus_read_registers(ctx, 0x00CC, 0x0006, tab_reg);
+  for(int i = 0; i < 6; i++)
+    printf("0x%.*X(%d) ", 4, tab_reg[i], tab_reg[i]);
   printf("\r\n");
-
+  modbus_set_slave(ctx,2);
+  modbus_read_registers(ctx, 0x00CC, 0x0006, tab_reg);
+  for(int i = 0; i < 6; i++)
+    printf("0x%.*X(%d) ", 4, tab_reg[i], tab_reg[i]);
+  printf("\r\n");
+  sleep(0.5);
+    }
+  //  modbus_write_registers(ctx, 0x1840, 0x0006, tab_reg);
 
   printf("bye gushi!\r\n");
   
