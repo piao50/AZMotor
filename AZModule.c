@@ -44,7 +44,7 @@ int main(int argc, char *argv[])
   /* Read 5 registers from the address 0 */
   modbus_read_registers(ctx, 0, 5, tab_reg);
   for(int i = 0; i < 32; i++)
-    printf("%x ", tag_reg[i]);
+    printf("%x ", tab_reg[i]);
   printf("\r\n");
 
 
