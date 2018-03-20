@@ -43,6 +43,9 @@ int main(int argc, char *argv[])
   uint16_t tab_reg[32];
   /* Read 5 registers from the address 0 */
   modbus_read_registers(ctx, 0, 5, tag_reg);
+  for(int i = 0; i < 32; i++)
+    printf("%x ", tag_reg[i]);
+  printf("\r\n");
 
 
   printf("bye gushi!\r\n");
