@@ -1,8 +1,7 @@
 #include "erpi.h"
 
-using namespace std;
 
-namespace exploringrpi {
+namespace modbus_motor {
   string hello(string name) {
     return ("Hello " + name + "!");
   }
@@ -86,11 +85,11 @@ namespace exploringrpi {
     return 100 * foo();
   }
 
-  BOOST_PYTHON_MODULE(erpi){
-    using namespace boost::python;
-    using namespace exploringrpi;
-    def("hello1", hello1);
-    def("hello", hello);
-    def("integrate", integrate);
-  }
+  // BOOST_PYTHON_MODULE(erpi){
+  //   using namespace boost::python;
+  //   using namespace exploringrpi;
+  //   def("hello1", hello1);
+  //   def("hello", hello);
+  //   def("integrate", integrate);
+  // }
 }

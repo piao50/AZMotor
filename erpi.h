@@ -12,4 +12,23 @@ extern "C" {
 #include <modbus.h>
 }
 
+using namespace std;
+
+namespace modbus_motor {
+public:
+	string hello(string name);
+	double integrate(double a, double b, int n);
+	extern "C" double foo();
+	extern "C" void foo1();
+	double hello1();
+
+	BOOST_PYTHON_MODULE(erpi){
+		using namespace boost::python;
+		using namespace exploringrpi;
+		def("hello1", hello1);
+		def("hello", hello);
+		def("integrate", integrate);
+	}
+}
+
 #endif
