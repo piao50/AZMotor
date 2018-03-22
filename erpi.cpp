@@ -1,13 +1,4 @@
-#include <string>
-#include <boost/python.hpp>
-
-extern "C" {
-#include <stdio.h>
-#include <unistd.h>
-#include <error.h>
-#include <stdlib.h>
-#include <modbus.h>
-}
+#include "erpi.h"
 
 using namespace std;
 
@@ -78,6 +69,16 @@ namespace exploringrpi {
 
     modbus_close(ctx);
     modbus_free(ctx);
+  }
+
+  int set_position(uint16_t id, 
+    uint16_t method, 
+    uint16_t position, 
+    uint16_t speed, 
+    uint16_t current)
+  {
+
+    return 0;
   }
 
   double hello1(){
