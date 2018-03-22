@@ -9,16 +9,10 @@ except NameError:
 
 print 'hello, gushi'
 
-data = {'a':1, 'b':2, 'c':3}
+data = {}
 
-#print data.keys()
-#print data.has_key('d')
-
-#for i in range(0,30):
-#    data[chr(i+ord('A'))] = i
-
-for i in range(0,30):
-    data[str(i)] = "[%d] %s" % (i, 'gushi')
+for i in range(0,11):
+    data[str(i).zfill(2)] = {'x':1,'y':2,'z':3}
 
 #print data
 
@@ -27,7 +21,7 @@ for key in sorted(data.iterkeys()):
 
 with open('xyz_motor.json','w') as f:
     s = json.dumps(data,
-                     indent=4,
+#                     indent=4,
                      separators=(',',':'),
                      ensure_ascii=False)
     f.write(to_unicode(s))

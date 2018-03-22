@@ -40,13 +40,13 @@ int main(int argc, char *argv[])
 
   sleep(1);
 
-  uint16_t tab_reg[32];
+  uint16_t tab_reg[512];
   /* Read 5 registers from the address 0 */
   while(1)
     {
       modbus_set_slave(ctx,1);
-  modbus_read_registers(ctx, 0x00CC, 0x0006, tab_reg);
-  for(int i = 0; i < 6; i++)
+  modbus_read_registers(ctx, 0x00C6, 0x00DF - 0x00C6 + 1, tab_reg);
+  for(int i = 0; i < 16; i++)
     printf("0x%.*X(%d) ", 4, tab_reg[i], tab_reg[i]);
   printf("\r\n");
   modbus_set_slave(ctx,2);
@@ -54,7 +54,7 @@ int main(int argc, char *argv[])
   for(int i = 0; i < 6; i++)
     printf("0x%.*X(%d) ", 4, tab_reg[i], tab_reg[i]);
   printf("\r\n");
-  sleep(0.5);
+  sleep(1);
     }
   //  modbus_write_registers(ctx, 0x1840, 0x0006, tab_reg);
 
