@@ -7,7 +7,7 @@ echo 'hello, bash!'
 
 echo 'build erpi_main...'
 g++ -O3 erpi_main.cpp  -o erpi_main -I/usr/include/python2.7 -lpython2.7 -lboost_python -I /usr/local/include/modbus -L /usr/local/lib -lmodbus
-./erpi_main
+sudo ./erpi_main
 
 # echo 'build AZModule...'
 # gcc -O3 AZModule.c -shared -I /usr/local/include/modbus -L /usr/local/lib -lmodbus -o AZModule.so
