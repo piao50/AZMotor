@@ -47,6 +47,34 @@ public:
 		return 0;
 	}
 
+	int alarm_reset(uint16_t slave_id)
+	{
+		modbus_set_slave(ctx, slave_id);
+		if(-1 == modbus_write_register(ctx, 0x007D, 0x0080)){
+			printf("ERR:%d\r\n", errno);
+		}
+		if(-1 == modbus_write_register(ctx, 0x007D, 0x0000)){
+			printf("ERR:%d\r\n",errno);
+		}
+		return 0;
+	}
+
+	int set_position_current(uint16_t slave_id, uint32_t pos_id, uint32_t current)
+	{
+		uint16_t tab_reg[512]; memset(tab_reg, 0, 512);
+		uint16_t base_addr = 0x1800;
+		uint16_t addr_offset = 0x0040;
+		uint16_t current_offset = 0x000A;
+		uint16_t addr = base_addr + pos_id * addr_offset + current_offset;
+		tab_reg[0] = (current & 0xFFFF0000) >> 16; tab_reg[1] = current & 0x0000FFFF;
+		modbus_set_slave(ctx, slave_id);
+		if(-1 == modbus_write_registers(ctx, addr, 0x0002, tab_reg)){
+			printf("ERR:%d\r\n", errno);
+			return -1;
+		}
+		return 0;
+	}
+
 	int set_position_info(uint16_t slave_id, uint32_t pos_id, uint32_t method, uint32_t position, uint32_t speed, uint32_t start_slope, uint32_t stop_slope)
 	{
 		printf("I'm set_position_info. [%d-(%d)],%d,%d,%d,%d,%d\r\n",
