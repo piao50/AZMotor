@@ -16,7 +16,7 @@ int main(int argc, char* argv[])
 
 	int KHz = 1000;
 
-	uint32_t cur = 700;
+	uint32_t cur = 500;
 
 	m.set_position_info(1, 0, 1, 1000, 8000, 10000*KHz, 1000*KHz); m.set_position_current(1, 0, cur);
 	m.set_position_info(1, 1, 1, 2000, 1000, 5000*KHz, 1000*KHz); m.set_position_current(1, 1, cur);
