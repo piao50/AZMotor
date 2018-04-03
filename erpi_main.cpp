@@ -14,8 +14,9 @@ int main(int argc, char* argv[])
 
 	m.open();
 
-	int KHz = 1000;
+	int postion = 0;
 
+	int KHz = 1000;
 	uint32_t cur = 500;
 
 	m.set_position_info(1, 0, 1, 1000, 8000, 10000*KHz, 1000*KHz); m.set_position_current(1, 0, cur);
@@ -73,6 +74,18 @@ int main(int argc, char* argv[])
 			m.goto_position(2, i);
 			if(i == 0) sleep(5);
 			else sleep(2);
+			// printf("[position] 1:%u, 2:%u\r\n", m.get_position(1), m.get_position(2));
+			motor_monitor_uint16 m1, m2;
+			if(-1 == m.get_monitor(1, &m1))
+				printf("ERR get_monitor #1");
+			if(-1 == m.get_monitor(2,&m2))
+				printf("ERR get_monitor #2");
+			printf("[position] 1:%u, 2:%u\r\n", 
+				(m1.target_position_1 << 16) + m1.target_position_2,
+				(m2.target_position_1 << 16) + m2.target_position_2);
+			printf("[speed] 1:%u, 2:%u\r\n", 
+				(m1.speed_HZ_1 << 16) + m1.speed_HZ_2,
+				(m2.speed_HZ_1 << 16) + m2.speed_HZ_2);
 		}
 	}
 

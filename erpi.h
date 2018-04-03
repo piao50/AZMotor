@@ -14,6 +14,33 @@ extern "C" {
 
 using namespace std;
 
+struct motor_monitor_uint16 {
+	uint16_t current_select_no_1; uint16_t current_select_no_2;
+	uint16_t current_running_no_1; uint16_t current_running_no_2;
+	uint16_t target_position_1; uint16_t target_position_2;
+	uint16_t target_speed_rmin_1;	uint16_t target_speed_rmin_2;
+	uint16_t target_speed_HZ_1; uint16_t target_speed_HZ_2;
+	uint16_t position_1; uint16_t position_2;
+	uint16_t speed_rmin_1; uint16_t speed_rmin_2;
+	uint16_t speed_HZ_1; uint16_t speed_HZ_2;
+};
+struct motor_monitor_uint32 {
+	uint32_t current_select_no;
+	uint32_t current_running_no;
+	uint32_t target_position;
+	uint32_t target_speed_rmin;
+	uint32_t target_speed_HZ;
+	uint32_t position;
+	uint32_t speed_rmin;
+	uint32_t speed_HZ;
+};
+
+union motor_monitor {
+	struct motor_monitor_uint32 uint32;
+	struct motor_monitor_uint16 uint16;
+};
+
+
 class modbus_motor {
 protected:
 	int a;
@@ -46,6 +73,49 @@ public:
 		}
 		return 0;
 	}
+
+	int get_monitor(uint16_t slave_id, motor_monitor_uint16 *monitor)
+	{
+		modbus_set_slave(ctx, slave_id);
+		int addr = 0x00c2;
+		uint16_t tab_reg[64];
+		int len = sizeof(tab_reg) / sizeof(tab_reg[0]);
+
+		uint32_t pos = 0;
+		if(-1 == modbus_read_registers(ctx, addr, len, tab_reg)){
+			printf("ERR:%d\r\n", errno);
+			return -1;
+		}
+
+		memcpy(monitor, tab_reg, sizeof(motor_monitor_uint16));
+		return 0;
+	}
+
+	uint32_t get_position(uint16_t slave_id)
+	{
+		modbus_set_slave(ctx, slave_id);
+		int addr = 0x00c2;
+		uint16_t tab_reg[64];
+		int len = sizeof(tab_reg) / sizeof(tab_reg[0]);
+
+		uint32_t pos = 0;
+		if(-1 == modbus_read_registers(ctx, addr, len, tab_reg)){
+			printf("ERR:%d\r\n", errno);
+			return 0;
+		}
+		for(int i = 0; i < len; i++)
+		{
+			printf("0x%.*X ", 4, tab_reg[i]);
+		}
+		printf("\r\n");
+		pos = (tab_reg[0] << 16) + tab_reg[1];
+
+		motor_monitor *status = (motor_monitor*)tab_reg;
+		pos = (status->uint16.target_position_1 << 16) + status->uint16.target_position_2;
+		// pos = status->uint32.target_position;
+		return pos;
+	}
+
 
 	int alarm_reset(uint16_t slave_id)
 	{
